@@ -1,0 +1,3 @@
+- Set MySQL as database
+- Setup Django
+- Put under Git

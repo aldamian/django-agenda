@@ -1,0 +1,4 @@
+django 2.2
+libmysqlclient-dev
+mysqlclient 2.0.3
+

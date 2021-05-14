@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ object.title }} - {{ object.entry_date }}</h1>
+    <h3>{{ object.entry_date }}</h3>
+    <!-- Replace title with content. Need markdown for content.
+    As of now, if there is a tag, display it. -->
+    {% if object.title %}
+        <p>{{ object.tags }}</p>
+    {% else %}
+        <p>Content coming soon!</p>
+    {% endif %}
+{% endblock content %}

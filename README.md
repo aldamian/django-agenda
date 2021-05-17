@@ -5,6 +5,6 @@ MySQL 5.7.34
 
 ## Technologies Used
 
-Django  <br />
-Bootstrap
+Django  Framework <br />
+Bootstrap Framework
 

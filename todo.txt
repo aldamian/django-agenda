@@ -1,0 +1,7 @@
+- Set MySQL as database - DONE
+- Setup Django - DONE
+- Put under Git - DONE
+- Create required classes - logged in user, anonymous user, agenda
+    - inherit from Django user class
+- Create login form
+- Create register form

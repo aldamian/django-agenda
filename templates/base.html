@@ -2,13 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Agenda{% block title %}{% endblock %}</title>
+    <title>{% block title %}Agenda{% endblock %}</title>
     <style>
         h1 {color: red}
     </style>
 </head>
 
 <body>
+    {% include 'navbar.html' %}
+
     {% block content %}
     {% endblock %}
 

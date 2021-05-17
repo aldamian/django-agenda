@@ -17,15 +17,19 @@ from django.contrib import admin
 from django.urls import path, re_path  # url
 
 from agenda.views import (
-    home_view,
+    search_view,
+    agenda_create_view,
     agenda_detail_view,
+    agenda_list_view,
     agenda_api_detail_view,
 )
 # pk - primary key
 
 
 urlpatterns = [
-    path('test/', home_view),
+    path('search/', search_view),
+    path('agendas/', agenda_list_view),
+    path('agendas/create/', agenda_create_view),
     path('agendas/<int:pk>/', agenda_detail_view),
     re_path(r'api/agendas/(?P<pk>\d+)/', agenda_api_detail_view),
     path('admin/', admin.site.urls),

@@ -16,17 +16,19 @@ class Agenda(models.Model):
         ("private", "private"),
         ("public", "public")
     )
-
+    """
+    CAN USE CUSTOM VALIDATORS DIRECTLY ON ANY OF THE MODEL FIELDS
+    """
     # id = models.AutoField()
+
+    # name of the Agenda
+    title = models.CharField(max_length=100, default="My Agenda")
 
     # set the field to when the Agenda was first created
     entry_date = models.DateField(default=timezone.now, auto_now_add=False)
 
     # set to when the Agenda was first created, updates when the Agenda is modified
     last_modified = models.DateField(auto_now=True, auto_now_add=False)
-
-    # name of the Agenda
-    title = models.CharField(max_length=100, default="My Agenda")
 
     # tags - search Agendas using tags
     # implement a list of default tags
@@ -42,7 +44,7 @@ class Agenda(models.Model):
     https://stackoverflow.com/questions/23031406/how-do-i-implement-markdown-in-django-1-6-app
         
     """
-    # content = models.TextField()
+    content = models.TextField(default="Enter your text here")
 
     # notify user about... about what?
     notify_me = models.BooleanField(default=False)

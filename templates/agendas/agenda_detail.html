@@ -1,0 +1,18 @@
+<!-- Don't add too much logic here.
+    Make the view do it.-->
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{{ object.title }} - {{ object.entry_date }}</h1>
+    <h3>{{ object.entry_date }}</h3>
+
+    {% if request.path == "/" %}
+        <h3>Welcome to home page</h3>
+        <!-- Replace title with content. Need markdown for content.
+    As of now, if there is a tag, display it. -->
+    {% else %}
+        {% include "agendas/agenda_detail_snippet.html" with agenda=object %}
+    {% endif %}
+
+{% endblock content %}

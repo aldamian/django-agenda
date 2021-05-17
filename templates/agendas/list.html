@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+Agendas - {{ block.super }}
+
+{% endblock %}
+
+{% block content %}
+
+    {% for object in object_list %}
+        <div>
+            {{ object.title }}
+        {% include 'agendas/agenda_detail_snippet.html' with product=object %}
+        </div>
+    {% endfor %}
+
+{% endblock %}

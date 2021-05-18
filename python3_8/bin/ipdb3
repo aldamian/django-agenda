@@ -1,0 +1,12 @@
+#!/home/assist-internship1/Desktop/dj_agenda/python3_8/bin/python3.8
+# EASY-INSTALL-ENTRY-SCRIPT: 'ipdb==0.13.7','console_scripts','ipdb3'
+__requires__ = 'ipdb==0.13.7'
+import re
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+    sys.exit(
+        load_entry_point('ipdb==0.13.7', 'console_scripts', 'ipdb3')()
+    )

@@ -16,6 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path  # url
 
+from accounts.views import (
+    login_view,
+    logout_view,
+    register_view,
+)
+
 from agenda.views import (
     search_view,
     agenda_create_view,
@@ -27,10 +33,13 @@ from agenda.views import (
 
 
 urlpatterns = [
+    path('login/', login_view),
+    path('logout/', logout_view),
+    path('register/', register_view),
     path('search/', search_view),
-    path('agendas/', agenda_list_view),
-    path('agendas/create/', agenda_create_view),
-    path('agendas/<int:pk>/', agenda_detail_view),
-    re_path(r'api/agendas/(?P<pk>\d+)/', agenda_api_detail_view),
+    path('agenda/', agenda_list_view),
+    path('agenda/create/', agenda_create_view),
+    path('agenda/<int:pk>/', agenda_detail_view),
+    re_path(r'api/agenda/(?P<pk>\d+)/', agenda_api_detail_view),
     path('admin/', admin.site.urls),
 ]

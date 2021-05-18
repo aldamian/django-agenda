@@ -1,7 +1,10 @@
+from django.conf import settings
 from django.db import models
 from datetime import datetime, timedelta
 from django.utils import timezone
 
+
+User = settings.AUTH_USER_MODEL
 
 def default_notify_time():
     now = timezone.now()
@@ -44,6 +47,7 @@ class Agenda(models.Model):
     https://stackoverflow.com/questions/23031406/how-do-i-implement-markdown-in-django-1-6-app
         
     """
+    # instead of default use placeholder in forms
     content = models.TextField(default="Enter your text here")
 
     # notify user about... about what?
@@ -53,9 +57,14 @@ class Agenda(models.Model):
     """ 
     TO DO notificare prin email daca Notify me este selectat
     """
+    # sa fie time field
     notify_me_at = models.DateTimeField(default=default_notify_time())
 
     # create user class and modify here
+    # Foreign Key correlates 2 tables together. Correlates Agenda to User
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    # deletes everything that is associated with the user
+    # user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     """
     added_by (user-ul care adauga intrarea in agenda)
     """

@@ -10,7 +10,7 @@ Agendas - {{ block.super }}
     {% for object in object_list %}
         <div>
             {{ object.title }}
-        {% include 'agendas/agenda_detail_snippet.html' with product=object %}
+        {% include 'agenda/agenda_detail_snippet.html' with product=object %}
         </div>
     {% endfor %}
 

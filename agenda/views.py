@@ -1,9 +1,17 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, Http404
 from django.shortcuts import render, redirect
 
 # Relative import
 from .forms import AgendaModelForm
 from .models import Agenda
+
+"""
+TO DO
+There is also staff_member_required decorator
+Very similar to django admin
+"""
 
 
 def search_view(request, *args, **kwargs):
@@ -34,15 +42,17 @@ THIS IS HARD CODED
 #     return render(request, "forms.html", {})
 
 
+@login_required
 def agenda_create_view(request, *args, **kwargs):
+
     form = AgendaModelForm(request.POST or None)
     if form.is_valid():
         obj = form.save(commit=False)
         # do some stuff with it and then save into database
         """
         stuff to do with it
-        obj.user = request.user
         """
+        obj.user = request.user
         obj.save()
         # cleaned data = validated data
         # print(form.cleaned_data)
@@ -64,13 +74,13 @@ def agenda_detail_view(request, pk):
     """
     TODO     replace title with content
     """
-    return render(request, "agendas/agenda_detail.html", {"object": obj})
+    return render(request, "agenda/agenda_detail.html", {"object": obj})
 
 
 def agenda_list_view(request, *args, **kwargs):
     qs = Agenda.objects.all()  # query set
     context = {"object_list": qs}
-    return render(request, "agendas/list.html", context)
+    return render(request, "agenda/list.html", context)
 
 
 def agenda_api_detail_view(request, pk, *args, **kwargs):

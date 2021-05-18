@@ -131,10 +131,22 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # for bootstrap
-STATIC_ROOT = os.path.join(BASE_DIR, 'root')
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-
-    os.path.join(BASE_DIR, 'static')
+    BASE_DIR / "staticfiles"
 ]
+
+# in production AWS S3 + Cloudfront, Google Cloud Storage, django-storages
+STATIC_ROOT = BASE_DIR / "cdn_test" / "static"
+
+MEDIA_URL = "/media/"
+
+# any file field upload goes here by default
+MEDIA_ROOT = BASE_DIR / "cdn_test" / "media"
+
+PROTECTED_MEDIA = BASE_DIR / "cdn_test" / "protected"
+
+if DEBUG:
+    # STATIC_ROOT.mkdir(parents=True, exist_ok=True)
+    MEDIA_ROOT.mkdir(parents=True, exist_ok=True)
+    PROTECTED_MEDIA.mkdir(parents=True, exist_ok=True)

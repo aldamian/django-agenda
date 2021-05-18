@@ -28,7 +28,6 @@ class RegisterForm(forms.Form):
             }
         )
     )
-    username = forms.CharField()
     password2 = forms.CharField(
         label='Confirm Password',
         widget=forms.PasswordInput(

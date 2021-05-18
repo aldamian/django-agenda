@@ -22,26 +22,6 @@ def search_view(request, *args, **kwargs):
     return render(request, "home.html", context)
 
 
-""" 
-THIS IS BAD.
-THIS IS HARD CODED
-"""
-# def agenda_create_view(request, *args, **kwargs):
-#     # print(request.POST)
-#     # print(request.GET)
-#     if request.method == "POST":
-#         post_data = request.POST or None
-#         if post_data is not None:
-#             my_form = AgendaForm(request.POST)
-#             if my_form.is_valid():
-#                 print(my_form.cleaned_data.get("title"))
-#                 title_from_input = my_form.cleaned_data.get("title")
-#                 Agenda.objects.create(title=title_from_input)
-#                 # print("post data", post_data)
-#
-#     return render(request, "forms.html", {})
-
-
 @login_required
 def agenda_create_view(request, *args, **kwargs):
 
@@ -72,7 +52,7 @@ def agenda_detail_view(request, pk):
         raise Http404
     # return HttpResponse(f"Product id {obj.id}")
     """
-    TODO     replace title with content
+    TODO replace title with content
     """
     return render(request, "agenda/agenda_detail.html", {"object": obj})
 

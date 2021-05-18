@@ -22,6 +22,7 @@ class AgendaModelForm(forms.ModelForm):
         model = Agenda
         fields = [
             'title',
+            'entry_date',
             'agenda_visibility',
             'tags',
             'notify_me',

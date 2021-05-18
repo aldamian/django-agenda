@@ -11,6 +11,7 @@ non_allowed_usernames = ['abc']
 # non_allowed_emails = ['']
 """
 TO DO: validate passwords.
+- implement reCAPTCHA
 """
 User = get_user_model()
 
@@ -72,10 +73,9 @@ class LoginForm(forms.Form):
     )
 
     # def clean(self):
-    #     username = self.cleaned_data.get("username")
-    #     password = self.cleaned_data.get("password")
-    #     # verify here if the user password is correct
-    #     # add additional form validation
+    #     data = super().clean()
+    #     username = data.get("username")
+    #     password = data.get("password")
 
     def clean_username(self):
         username = self.cleaned_data.get("username")

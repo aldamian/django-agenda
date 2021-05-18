@@ -8,7 +8,7 @@ User = settings.AUTH_USER_MODEL
 
 def default_notify_time():
     now = timezone.now()
-    start = now.replace(hour=9, minute=0, second=0, microsecond=0)
+    start = now.replace(hour=6, minute=0, second=0, microsecond=0)
     # user tomorrow 9 PM if the model instance is created after 9 PM
     return start if start > now else start + timedelta(days=1)
 
@@ -25,7 +25,6 @@ class Agenda(models.Model):
     # id = models.AutoField()
     # name of the Agenda
     title = models.CharField(max_length=100)
-
     # set the field to when the Agenda was first created
     entry_date = models.DateField(default=timezone.now, auto_now_add=False)
 
@@ -47,7 +46,7 @@ class Agenda(models.Model):
         
     """
     # instead of default use placeholder in forms
-    content = models.TextField(default="Enter your text here")
+    content = models.TextField()
 
     # notify user about... about what?
     notify_me = models.BooleanField(default=False)
@@ -56,8 +55,8 @@ class Agenda(models.Model):
     """ 
     TO DO notification via email if this is selected
     """
-    # sa fie time field
-    notify_me_at = models.TimeField(default=default_notify_time())
+    # this should be time field
+    notify_me_at = models.DateTimeField(default=default_notify_time())
 
     # create user class and modify here
     # Foreign Key correlates 2 tables together. Correlates Agenda to User

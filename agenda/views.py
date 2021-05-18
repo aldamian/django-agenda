@@ -48,7 +48,6 @@ def agenda_detail_view(request, pk):
     try:
         obj = Agenda.objects.get(pk=pk)
     except Agenda.DoesNotExist:
-        # render html page, with HTTP status code of 404
         raise Http404
     # return HttpResponse(f"Product id {obj.id}")
     """
@@ -57,6 +56,7 @@ def agenda_detail_view(request, pk):
     return render(request, "agenda/agenda_detail.html", {"object": obj})
 
 
+@staff_member_required
 def agenda_list_view(request, *args, **kwargs):
     qs = Agenda.objects.all()  # query set
     context = {"object_list": qs}

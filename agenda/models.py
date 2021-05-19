@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.db import models
-from datetime import timedelta
-from django.utils import timezone
+from django.utils import timezone, dateformat
 
 User = settings.AUTH_USER_MODEL
 
@@ -26,16 +25,18 @@ class Agenda(models.Model):
     # name of the Agenda
     title = models.CharField(max_length=100)
     # set the field to when the Agenda was first created
-    entry_date = models.DateField(default=timezone.now, auto_now_add=False)
+    entry_date = models.DateField(default=timezone.now)
 
     # set to when the Agenda was first created, updates when the Agenda is modified
     last_modified = models.DateField(auto_now=True)
 
     # tags - search Agendas using tags
     # implement a list of default tags, but also let the user create custom tags
+    # TO DO - search by tags
     tags = models.CharField(max_length=10)
 
     # agenda visibility, default is private
+    # implement visibility
     agenda_visibility = models.CharField(max_length=7, choices=VISIBILITY_CHOICES, default="private")
 
     # entry text - what kind of info?
@@ -52,10 +53,10 @@ class Agenda(models.Model):
 
     # notify_me about something at a specific time, if notify me is selected
     """ 
-    TO DO notification via email if this is selected
+    TO DO notification via email if notify_me is selected
     """
     # this should be time field
-    notify_me_at = models.DateTimeField(default=default_notify_time)
+    notify_me_at = models.TimeField(default=default_notify_time)
 
     # create user class and modify here
     # Foreign Key correlates 2 tables together. Correlates Agenda to User

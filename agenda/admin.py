@@ -6,7 +6,7 @@ from .models import Agenda
 
 class AgendaAdmin(admin.ModelAdmin):
     list_display = (
-                    # 'user', - need to change user model to solve this error. 
+                    # 'user',  need to change user model to solve this error.
                     'title',
                     'entry_date',
                     'last_modified',

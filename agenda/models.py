@@ -47,6 +47,7 @@ class Agenda(models.Model):
     https://stackoverflow.com/questions/23031406/how-do-i-implement-markdown-in-django-1-6-app      
     """
     # instead of default use placeholder in forms
+    # need markdown support for this
     content = models.TextField()
 
     # notify user about... about what?

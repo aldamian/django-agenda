@@ -12,6 +12,12 @@ non_allowed_usernames = ['abc']
 """
 TO DO: validate passwords.
 - implement reCAPTCHA
+
+- bootstrap tag
+- forms.'field'.bootstrap
+Inherit from auth Register
+
+- user bootstrap already made and just put my classes there
 """
 User = get_user_model()
 
@@ -25,7 +31,7 @@ class RegisterForm(forms.Form):
             # add form control with bootstrap
             attrs={
                 "class": "form-control",
-                "id": "user-password"
+                "id": "user-password",
             }
         )
     )
@@ -67,7 +73,7 @@ class LoginForm(forms.Form):
             # add form control with bootstrap
             attrs={
                 "class": "form-control",
-                "id": "user-password"
+                "id": "user-password",
             }
         )
     )

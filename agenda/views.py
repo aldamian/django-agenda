@@ -7,12 +7,6 @@ from django.shortcuts import render, redirect
 from .forms import AgendaModelForm
 from .models import Agenda
 
-"""
-TO DO
-There is also staff_member_required decorator
-Very similar to django admin
-"""
-
 
 def search_view(request, *args, **kwargs):
     query = request.GET.get('q')

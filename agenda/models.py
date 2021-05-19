@@ -5,20 +5,20 @@ from django.utils import timezone
 
 User = settings.AUTH_USER_MODEL
 
+VISIBILITY_CHOICES = (
+    ("private", "private"),
+    ("public", "public")
+)
+
 
 def default_notify_time():
     now = timezone.now()
-    start = now.replace(hour=6, minute=0, second=0, microsecond=0)
-    # user tomorrow 9 PM if the model instance is created after 9 PM
-    return start if start > now else start + timedelta(days=1)
+    start = now.replace(hour=9, minute=0, second=0, microsecond=0)
+    return start
 
 
 class Agenda(models.Model):
     # use sets because sets are very fast. Can't use sets, it has to be a tuple
-    VISIBILITY_CHOICES = (
-        ("private", "private"),
-        ("public", "public")
-    )
     """
     CAN USE CUSTOM VALIDATORS DIRECTLY ON ANY OF THE MODEL FIELDS
     """
@@ -29,7 +29,7 @@ class Agenda(models.Model):
     entry_date = models.DateField(default=timezone.now, auto_now_add=False)
 
     # set to when the Agenda was first created, updates when the Agenda is modified
-    last_modified = models.DateField(auto_now=True, auto_now_add=False)
+    last_modified = models.DateField(auto_now=True)
 
     # tags - search Agendas using tags
     # implement a list of default tags, but also let the user create custom tags
@@ -42,8 +42,7 @@ class Agenda(models.Model):
     """ 
     add markdown support - pip install django-markdown-view - DO TODAY
     https://github.com/trentm/django-markdown-deux
-    https://stackoverflow.com/questions/23031406/how-do-i-implement-markdown-in-django-1-6-app
-        
+    https://stackoverflow.com/questions/23031406/how-do-i-implement-markdown-in-django-1-6-app      
     """
     # instead of default use placeholder in forms
     content = models.TextField()
@@ -56,13 +55,8 @@ class Agenda(models.Model):
     TO DO notification via email if this is selected
     """
     # this should be time field
-    notify_me_at = models.DateTimeField(default=default_notify_time())
+    notify_me_at = models.DateTimeField(default=default_notify_time)
 
     # create user class and modify here
     # Foreign Key correlates 2 tables together. Correlates Agenda to User
-    """
-    added_by (user that adds the entry)
-    """
-    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    # deletes everything that is associated with the user
-    # user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)

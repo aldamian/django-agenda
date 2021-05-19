@@ -19,6 +19,8 @@ Inherit from auth Register
 
 - user bootstrap already made and just put my classes there
 """
+
+
 User = get_user_model()
 
 

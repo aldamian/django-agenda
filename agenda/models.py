@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from django.utils import timezone, dateformat
+from django.utils import timezone
 
 User = settings.AUTH_USER_MODEL
 
@@ -17,7 +17,6 @@ def default_notify_time():
 
 
 class Agenda(models.Model):
-    # use sets because sets are very fast. Can't use sets, it has to be a tuple
     """
     CAN USE CUSTOM VALIDATORS DIRECTLY ON ANY OF THE MODEL FIELDS
     """

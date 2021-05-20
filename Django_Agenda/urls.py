@@ -34,16 +34,19 @@ from agenda.views import (
 from django.views.generic import TemplateView
 
 urlpatterns = [
+
     path('', TemplateView.as_view(template_name='home.html')),
     path('login/', login_view),
     path('logout/', logout_view),
     path('register/', register_view),
+    path('email_sent/', TemplateView.as_view(template_name='account/email_sent.html')),
     path('search/', search_view),
     path('agenda/', agenda_list_view),
     path('agenda/create/', agenda_create_view),
     path('agenda/<int:pk>/', agenda_detail_view),
     re_path(r'api/agenda/(?P<pk>\d+)/', agenda_api_detail_view),
     path('admin/', admin.site.urls),
+
 ]
 
 if settings.DEBUG:

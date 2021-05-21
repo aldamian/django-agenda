@@ -7,3 +7,7 @@ MySQL 5.7.34
 
 Django  Framework <br />
 Bootstrap Framework
+<<<<<<< HEAD
+=======
+
+>>>>>>> main

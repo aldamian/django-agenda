@@ -5,6 +5,7 @@
 """
 Use User, define specific class only if I need something more
 """
+
 # alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
 # I'm not sure if this regex is correct
 # alphanumeric_and_line = RegexValidator(r'^[0-9a-zA-Z-]*$', 'Only alphanumeric characters and - are allowed.')

@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django import forms
 from django.core.validators import RegexValidator
+#from django.contrib.auth.forms import AuthenticationForm
 
 alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
 alphanumeric_and_line = RegexValidator(r'^[0-9a-zA-Z-]*$', 'Only alphanumeric characters and - are allowed.')
@@ -29,6 +30,7 @@ User = get_user_model()
 
 
 class RegisterForm(forms.Form):
+
     first_name  = forms.CharField(max_length=50, validators=[alphanumeric])
     surname     = forms.CharField(max_length=50, validators=[alphanumeric])
     username    = forms.CharField(max_length=50, validators=[alphanumeric_and_line])
@@ -41,16 +43,6 @@ class RegisterForm(forms.Form):
     #         attrs={
     #             "class": "form-control",
     #             "id": "user-password",
-    #         }
-    #     )
-    # )
-    # password2 = forms.CharField(
-    #     label='Confirm Password',
-    #     widget=forms.PasswordInput(
-    #         # add form control with bootstrap
-    #         attrs={
-    #             "class": "form-control",
-    #             "id": "user-confirm-password"
     #         }
     #     )
     # )
@@ -77,17 +69,16 @@ class RegisterForm(forms.Form):
 
 class LoginForm(forms.Form):
     username = forms.CharField()
-    password = forms.CharField()
-
-    # password = forms.CharField(
-    #     widget=forms.PasswordInput(
-    #         # add form control with bootstrap
-    #         attrs={
-    #             "class": "form-control",
-    #             "id": "user-password",
-    #         }
-    #     )
-    # )
+    # password = forms.CharField()
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            # add form control with bootstrap
+            attrs={
+                "class": "form-control",
+                "id": "user-password",
+            }
+        )
+    )
 
     # def clean(self):
     #     data = super().clean()
@@ -97,7 +88,12 @@ class LoginForm(forms.Form):
     def clean_username(self):
         username = self.cleaned_data.get("username")
         qs = User.objects.filter(username__iexact=username)  # ignore uppercase/lowercase
-        if qs.exists():
+        if not qs.exists():
             raise forms.ValidationError("This is not a valid user.")
 
         return username
+
+    def clean_password(self):
+        password = self.cleaned_data.get("password")
+
+        return password

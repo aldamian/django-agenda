@@ -5,4 +5,7 @@
     - inherit from Django user class
 - Create login form - DONE
 - Create register form - DONE
--
+
+CONSIDERED IMPROVEMENTS
+
+- use django crispy forms

@@ -15,7 +15,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, re_path, include
 from django.conf.urls.static import static
-from django.contrib.auth import views as auth_views
+# from django.contrib.auth import views as auth_views
 
 from accounts.views import (
     login_view,
@@ -41,11 +41,13 @@ urlpatterns = [
     path('logout/', logout_view),
     path('register/', register_view),
     path('email_sent/', TemplateView.as_view(template_name='account/email_sent.html')),
-    path('password-reset/', auth_views.PasswordResetView.as_view(template_name='account/password_reset.html'),
-         name='password_reset'),
-    path('password-reset-confirm/<uidb64>/<token>/',
-         auth_views.PasswordResetConfirmView.as_view(template_name='account/password_reset_confirm.html'),
-         name='password_reset_confirm'),
+
+    # path('password-reset/', auth_views.PasswordResetView.as_view(template_name='account/password_reset.html'),
+    #      name='password_reset'),
+    # path('password-reset-confirm/<uidb64>/<token>/',
+    #      auth_views.PasswordResetConfirmView.as_view(template_name='account/password_reset_confirm.html'),
+    #      name='password_reset_confirm'),
+
     path('search/', search_view),
     path('agenda/', agenda_list_view),
     path('agenda/create/', agenda_create_view),

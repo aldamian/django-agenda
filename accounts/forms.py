@@ -1,14 +1,14 @@
 from django.contrib.auth import get_user_model
 from django import forms
 from django.core.validators import RegexValidator
-#from django.contrib.auth.forms import AuthenticationForm
+# from django.contrib.auth.forms import AuthenticationForm
 
 alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
 alphanumeric_and_line = RegexValidator(r'^[0-9a-zA-Z-]*$', 'Only alphanumeric characters and - are allowed.')
 
 # implement this, there must be a more elegant solution though.
 # instead of me writing all the bad/offensive usernames I can think of
-non_allowed_usernames = ['abc']
+non_allowed_usernames = ['abc', '1234', 'admin1234']
 # check for unique email & username
 
 # Find a way to prevent users from using temp mails?
@@ -68,14 +68,25 @@ class RegisterForm(forms.Form):
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField()
-    # password = forms.CharField()
+
+    username = forms.CharField(
+        widget=forms.TextInput(
+            # add form control with bootstrap
+            attrs={
+                "class": "form-control",
+                "id": "user-name",
+                "style": "width: 200px",
+            }
+        )
+    )
+
     password = forms.CharField(
         widget=forms.PasswordInput(
             # add form control with bootstrap
             attrs={
                 "class": "form-control",
                 "id": "user-password",
+                "style": "width: 200px",
             }
         )
     )

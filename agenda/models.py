@@ -43,7 +43,6 @@ class Agenda(models.Model):
     https://github.com/trentm/django-markdown-deux
     https://stackoverflow.com/questions/23031406/how-do-i-implement-markdown-in-django-1-6-app      
     """
-    # instead of default use placeholder in forms
     # need markdown support for this
     content = models.TextField()
 
@@ -55,4 +54,4 @@ class Agenda(models.Model):
     TO DO notification via email if notify_me is selected
     """
     # this should be time field
-    notify_me_at = models.TimeField(default=default_notify_time, blank=True)
+    notify_me_at = models.TimeField(default=default_notify_time, null=True, blank=True)

@@ -1,4 +1,6 @@
 from django import forms
+from django.utils import timezone
+import datetime
 
 from .models import Agenda
 
@@ -10,13 +12,13 @@ class AgendaModelForm(forms.ModelForm):
     title = forms.CharField()
     can use custom validators directly here
     """
-    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Enter your title here.'}))
-    tags = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Maximum 5 tags.'}))
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Agenda name'}))
+    tags = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Maximum 5 tags'}))
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
         super(AgendaModelForm, self).__init__(*args, **kwargs)
-        self.fields['notify_me_at'].widget.attrs['disabled'] = 'true'
+        # self.fields['notify_me_at'].widget.attrs['disabled'] = 'true'
 
     """
     USE BOOTSTRAP HERE
@@ -24,6 +26,33 @@ class AgendaModelForm(forms.ModelForm):
     or django crispy forms
     WRITE THE CSS CLASS INSIDE OF THE FIELD
     """
+
+    def clean(self):
+
+        entry_date = self.cleaned_data.get('entry_date')
+        if entry_date is not None:
+            notify_me = self.cleaned_data.get('notify_me')
+            notify_me_at = self.cleaned_data.get('notify_me_at')
+
+            min_time_diff = datetime.timedelta(hours=1)
+            # need to set timezone to user timezone
+            now = datetime.datetime.strptime(str(timezone.now())[0:19], "%Y-%m-%d %H:%M:%S") + 3 * min_time_diff
+
+            enter_delta = datetime.timedelta(hours=now.hour, minutes=now.minute, seconds=now.second)
+            exit_delta = datetime.timedelta(hours=notify_me_at.hour,
+                                            minutes=notify_me_at.minute,
+                                            seconds=notify_me_at.second)
+
+            actual_time_diff = exit_delta-enter_delta
+            print(entry_date, notify_me_at, now.time(), min_time_diff)
+
+            if entry_date < now.date() and notify_me:
+                raise forms.ValidationError("Can't notify for entries in the past.")
+
+            if entry_date == now.date() and notify_me_at > now.time() and actual_time_diff < min_time_diff:
+                raise forms.ValidationError("Can't notify sooner than 1 hour.")
+
+        return self.cleaned_data
 
     class Meta:
         model = Agenda
@@ -40,7 +69,7 @@ class AgendaModelForm(forms.ModelForm):
     def clean_title(self):
         data = self.cleaned_data.get('title')
         if len(data) < 4:
-            raise forms.ValidationError("This is not long enough")
+            raise forms.ValidationError("Title too short.")
         return data
 
     def clean_entry_date(self):
@@ -51,9 +80,5 @@ class AgendaModelForm(forms.ModelForm):
         return data
 
     def clean_notify_me_at(self):
-        data1 = self.cleaned_data.get('notify_me')
-        data2 = self.cleaned_data.get('notify_me_at')
-        print(data1)
-        if data1:
-            return data2
-        return None
+        data = self.cleaned_data.get('notify_me_at')
+        return data

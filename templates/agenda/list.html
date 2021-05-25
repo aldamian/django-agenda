@@ -9,7 +9,7 @@ Agendas - {{ block.super }}
 
     {% for object in object_list %}
         <div>
-            {{ object.title }}
+            <h3 style="color: dodgerblue">"{{ object.title }}" - {{ object.user }}</h3>
         {% include 'agenda/agenda_detail_snippet.html' with product=object %}
         </div>
     {% endfor %}

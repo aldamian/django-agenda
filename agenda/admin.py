@@ -11,7 +11,7 @@ class AgendaAdmin(admin.ModelAdmin):
                     'entry_date',
                     'last_modified',
                     'tags',
-                    'agenda_visibility',
+                    'public',
                     'content',
                     'notify_me',
                     'notify_me_at'

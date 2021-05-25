@@ -6,11 +6,6 @@ from django.contrib.auth import get_user_model
 # User = settings.AUTH_USER_MODEL
 User = get_user_model()
 
-VISIBILITY_CHOICES = (
-    ("private", "private"),
-    ("public", "public")
-)
-
 
 def default_notify_time():
     now = timezone.now()
@@ -22,6 +17,9 @@ class Agenda(models.Model):
     """
     CAN USE CUSTOM VALIDATORS DIRECTLY ON ANY OF THE MODEL FIELDS
     """
+    # Foreign Key correlates 2 tables together. Correlates Agenda to User
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+
     # id = models.AutoField()
     # name of the Agenda
     title = models.CharField(max_length=100)
@@ -37,9 +35,8 @@ class Agenda(models.Model):
     tags = models.CharField(max_length=10)
 
     # agenda visibility, default is private
-    # implement visibility
-    agenda_visibility = models.CharField(max_length=7, choices=VISIBILITY_CHOICES, default="private")
-
+    # keep this as to not delete the database, it isn't used.
+    public = models.BooleanField(default=False)
     # entry text - what kind of info?
     """ 
     add markdown support - pip install django-markdown-view - DO TODAY
@@ -58,8 +55,4 @@ class Agenda(models.Model):
     TO DO notification via email if notify_me is selected
     """
     # this should be time field
-    notify_me_at = models.TimeField(default=default_notify_time)
-
-    # create user class and modify here
-    # Foreign Key correlates 2 tables together. Correlates Agenda to User
-    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    notify_me_at = models.TimeField(default=default_notify_time, blank=True)

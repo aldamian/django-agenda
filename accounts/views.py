@@ -3,6 +3,12 @@ from django.shortcuts import render, redirect
 from Django_Agenda.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
 
+# # reset password
+# from django.utils.encoding import force_text
+# from django.utils.http import urlsafe_base64_decode
+# from .tokens import account_activation_token
+# from django.views import View
+
 from .forms import LoginForm, RegisterForm
 
 User = get_user_model()
@@ -24,7 +30,7 @@ def register_view(request):
         email       = form.cleaned_data.get("email")
 
         try:
-            user = User.objects.create_user(username, email)
+            user            = User.objects.create_user(username, email)
             user.first_name = first_name
             user.last_name  = surname
             user.save()
@@ -46,6 +52,24 @@ def register_view(request):
             return render(request, "forms.html", {"form": form})
 
     return render(request, "forms.html", {"form": form})
+
+# lasat la urma
+# class ActivateAccountView(View):
+#     def get(self, request, uidb64, token):
+#         try:
+#             uid = force_text(urlsafe_base64_decode(uidb64))
+#             user = User.objects.get(pk=uid)
+#         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+#             user = None
+#
+#         if user is not None and account_activation_token.check_token(user, token):
+#             user.profile.email_confirmed = True
+#             user.save()
+#             login(request, user)
+#             return redirect('profile')
+#         else:
+#             # invalid link
+#             return render(request, 'registration/invalid.html')
 
 
 def login_view(request):

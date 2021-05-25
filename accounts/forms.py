@@ -1,9 +1,10 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.core.validators import RegexValidator
 # from django.contrib.auth.forms import AuthenticationForm
 
-alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
+alphabetical          = RegexValidator(r'^[a-zA-Z-]*$', 'Please enter only alphabetical letters.')
 alphanumeric_and_line = RegexValidator(r'^[0-9a-zA-Z-]*$', 'Only alphanumeric characters and - are allowed.')
 
 # implement this, there must be a more elegant solution though.
@@ -31,8 +32,8 @@ User = get_user_model()
 
 class RegisterForm(forms.Form):
 
-    first_name  = forms.CharField(max_length=50, validators=[alphanumeric])
-    surname     = forms.CharField(max_length=50, validators=[alphanumeric])
+    first_name  = forms.CharField(max_length=50, validators=[alphabetical])
+    surname     = forms.CharField(max_length=50, validators=[alphabetical])
     username    = forms.CharField(max_length=50, validators=[alphanumeric_and_line])
     email       = forms.EmailField(max_length=255)
 

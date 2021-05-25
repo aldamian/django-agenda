@@ -5,7 +5,7 @@
 {% block content %}
 
     <h1>{{ object.title }} - {{ object.entry_date }}</h1>
-    <h3>{{ object.entry_date }}</h3>
+    <h3>Created by: {{object.user}}</h3>
 
     {% if request.path == "/" %}
         <h3>Welcome to home page</h3>

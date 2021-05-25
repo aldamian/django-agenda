@@ -13,9 +13,10 @@ Class-based views
 """
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path, re_path, include
+from django.urls import path, re_path
 from django.conf.urls.static import static
-# from django.contrib.auth import views as auth_views
+# from django.conf.urls import url
+from django.contrib.auth import views
 
 from accounts.views import (
     login_view,
@@ -36,21 +37,30 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
 
-    path('', TemplateView.as_view(template_name='home.html')),
-    path('login/', login_view),
-    path('logout/', logout_view),
-    path('register/', register_view),
+    # path('', include('django.contrib.auth.urls')),
+    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
+    path('register/', register_view, name='register'),
     path('email_sent/', TemplateView.as_view(template_name='account/email_sent.html')),
 
-    # path('password-reset/', auth_views.PasswordResetView.as_view(template_name='account/password_reset.html'),
-    #      name='password_reset'),
+    path('password-reset/',
+         views.PasswordResetView.as_view(template_name='account/password_reset_form.html'),
+         name='password_reset'),
+    path('password-reset-done',
+         views.PasswordResetDoneView.as_view(template_name='account/password_reset_done.html'),
+         name='password_reset_done'),
+
+    # url(r'^activate_account/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+    #     views.ActivateAccountView.as_view(), name='activate_account'),
+
     # path('password-reset-confirm/<uidb64>/<token>/',
     #      auth_views.PasswordResetConfirmView.as_view(template_name='account/password_reset_confirm.html'),
     #      name='password_reset_confirm'),
 
     path('search/', search_view),
-    path('agenda/', agenda_list_view),
-    path('agenda/create/', agenda_create_view),
+    path('agenda/', agenda_list_view, name='view agendas'),
+    path('agenda/create/', agenda_create_view, name='create agenda'),
     path('agenda/<int:pk>/', agenda_detail_view),
     re_path(r'api/agenda/(?P<pk>\d+)/', agenda_api_detail_view),
     path('admin/', admin.site.urls),

@@ -30,13 +30,18 @@ def agenda_create_view(request, *args, **kwargs):
         """
         obj.user = request.user
         obj.save()
-        # cleaned data = validated data
-        # print(form.cleaned_data)
-        # data = form.cleaned_data
-        # Agenda.objects.create(**data)
+        """
+        cleaned data = validated data
+        print(form.cleaned_data)
+        data = form.cleaned_data
+        Agenda.objects.create(**data)
+        """
         form = AgendaModelForm(request=request)
-        # return HttpResponseRedirect("/success")
-        # return redirect("/success")
+        """
+        return HttpResponseRedirect("/success")
+        return redirect("/success")        
+        """
+
     return render(request, "agenda/agenda_create.html", {"form": form})
 
 
@@ -52,12 +57,11 @@ def agenda_detail_view(request, pk):
         return HttpResponseNotFound("Page not found.")
 
 
-# @staff_member_required
 def agenda_list_view(request, *args, **kwargs):
     if request.user.is_anonymous:
-        qs = Agenda.objects.filter(public=1)
+        qs = Agenda.objects.filter(public=1).order_by('-last_modified', 'entry_date')
     else:
-        qs = Agenda.objects.filter(Q(user=request.user) | Q(public=1))
+        qs = Agenda.objects.filter(Q(user=request.user) | Q(public=1)).order_by('-last_modified', 'entry_date')
 
     context = {"object_list": qs}
     return render(request, "agenda/agenda_list.html", context)
@@ -67,8 +71,7 @@ def agenda_list_view(request, *args, **kwargs):
 def search_agenda_view(request):
     if request.method == "POST":
         searched = request.POST.get('searched')
-        qs = Agenda.objects.filter(Q(user=request.user) | Q(public=1)).filter(tags__icontains=searched)
-        print(qs)
+        qs = Agenda.objects.filter(Q(user=request.user) | Q(public=1)).filter(tags__icontains=searched).order_by('-last_modified', 'entry_date')
         return render(request, 'agenda/agenda_search_by_tags.html',
                       {'searched': searched,
                        'agenda': qs})

@@ -22,7 +22,7 @@
 <body>
 
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark" >
-        <a href="{%url 'home'%}" class="navbar-brand">Django Agenda</a>
+        <a href="{%url 'profile' request.user %}" class="navbar-brand">Django Agenda</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
             <span class="navbar-toggler-icon"></span>
         </button>

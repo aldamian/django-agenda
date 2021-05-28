@@ -44,7 +44,7 @@ class AgendaModelForm(forms.ModelForm):
                                             seconds=notify_me_at.second)
 
             actual_time_diff = exit_delta-enter_delta
-            print(entry_date, notify_me_at, now.time(), min_time_diff)
+            # print(entry_date, notify_me_at, now.time(), min_time_diff)
 
             if entry_date < now.date() and notify_me:
                 raise forms.ValidationError("Can't notify for entries in the past.")

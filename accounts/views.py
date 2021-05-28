@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from Django_Agenda.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
+from django.core.paginator import Paginator
 
 # # reset password
 # from django.utils.encoding import force_text
@@ -10,6 +11,7 @@ from django.core.mail import send_mail
 # from django.views import View
 
 from .forms import LoginForm, RegisterForm
+from agenda.models import Agenda
 
 User = get_user_model()
 
@@ -24,15 +26,15 @@ def register_view(request):
     form = RegisterForm(request.POST or None)
 
     if form.is_valid():
-        first_name  = form.cleaned_data.get("first_name")
-        surname     = form.cleaned_data.get("surname")
-        username    = form.cleaned_data.get("username")
-        email       = form.cleaned_data.get("email")
+        first_name = form.cleaned_data.get("first_name")
+        surname = form.cleaned_data.get("surname")
+        username = form.cleaned_data.get("username")
+        email = form.cleaned_data.get("email")
 
         try:
-            user            = User.objects.create_user(username, email)
+            user = User.objects.create_user(username, email)
             user.first_name = first_name
-            user.last_name  = surname
+            user.last_name = surname
             user.save()
 
         except Exception:  # this exception is too broad
@@ -73,8 +75,6 @@ def register_view(request):
 
 
 def login_view(request):
-    # import ipdb
-    # ipdb.set_trace()
 
     if request.user.is_authenticated:
         return redirect('/')
@@ -84,7 +84,7 @@ def login_view(request):
     if form.is_valid():
         username = form.cleaned_data.get("username")
         password = form.cleaned_data.get("password")
-        user     = authenticate(request, username=username, password=password)
+        user = authenticate(request, username=username, password=password)
         print(user)
 
         if user is not None:  # now request.user == user until the session ends
@@ -100,6 +100,19 @@ def login_view(request):
             return render(request, "forms.html", {"form": form})
 
     return render(request, "forms.html", {"form": form})
+
+
+def profile_view(request, username):
+    user = User.objects.get(username=username)
+    if user == request.user:
+        qs = Agenda.objects.filter(user=user).order_by('-last_modified', 'entry_date')
+    else:
+        qs = Agenda.objects.filter(user=user).filter(public=1).order_by('-last_modified', 'entry_date')
+    paginator = Paginator(qs, 5)
+    page = request.GET.get('page')
+    agendas = paginator.get_page(page)
+
+    return render(request, 'account/profile.html', {'agendas': agendas})
 
 
 def logout_view(request):

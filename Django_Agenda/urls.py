@@ -20,6 +20,7 @@ from django.contrib.auth import views
 
 from accounts.views import (
     login_view,
+    profile_view,
     logout_view,
     register_view,
 )
@@ -42,6 +43,7 @@ urlpatterns = [
     # path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('', agenda_list_view, name='home'),
     path('login/', login_view, name='login'),
+    path('profile/<username>/', profile_view, name="profile"),
     path('logout/', logout_view, name='logout'),
     path('register/', register_view, name='register'),
     path('email_sent/', TemplateView.as_view(template_name='account/email_sent.html')),

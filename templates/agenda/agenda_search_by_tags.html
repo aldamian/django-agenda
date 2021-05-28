@@ -9,7 +9,7 @@
             {% for object in agenda %}
                 <div>
                     <a href="/agenda/{{ object.id }}"><h3 style="color: dodgerblue">"{{ object.title }}"</h3></a>
-                        Created by: <a href="/"> {{ object.user }} </a>
+                        Created by: <a href="{%url 'profile' object.user %}"> {{ object.user }} </a>
                     <br/>
                     {% include 'agenda/agenda_detail_snippet.html' with product=object %}
                 </div>

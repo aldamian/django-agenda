@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+Agendas - {{ block.super }}
+
+{% endblock %}
+
+{% block content %}
+
+    {% if request.user.is_authenticated %}
+        <form class="d-flex" method="POST" action="{% url 'search by tags' %}">
+            {% csrf_token %}
+
+            <input class="form-control me-2" type="search" placeholder="Search by tags" aria-label="Search" name="searched">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </form>
+        <br><br>
+
+    {% endif %}
+
+    {% for object in object_list %}
+        <div>
+            <a href="/agenda/{{ object.id }}"><h3 style="color: dodgerblue">"{{ object.title }}"</h3></a>
+                Created by: <a href="/">{{ object.user }} </a>
+            <br><br>
+        {% include 'agenda/agenda_detail_snippet.html' with product=object %}
+        </div>
+    {% endfor %}
+
+{% endblock %}

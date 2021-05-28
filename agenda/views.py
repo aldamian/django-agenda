@@ -37,7 +37,7 @@ def agenda_create_view(request, *args, **kwargs):
         form = AgendaModelForm(request=request)
         # return HttpResponseRedirect("/success")
         # return redirect("/success")
-    return render(request, "agenda/create_agenda.html", {"form": form})
+    return render(request, "agenda/agenda_create.html", {"form": form})
 
 
 def agenda_detail_view(request, pk):
@@ -60,7 +60,20 @@ def agenda_list_view(request, *args, **kwargs):
         qs = Agenda.objects.filter(Q(user=request.user) | Q(public=1))
 
     context = {"object_list": qs}
-    return render(request, "agenda/list.html", context)
+    return render(request, "agenda/agenda_list.html", context)
+
+
+@login_required
+def search_agenda_view(request):
+    if request.method == "POST":
+        searched = request.POST.get('searched')
+        qs = Agenda.objects.filter(Q(user=request.user) | Q(public=1)).filter(tags__icontains=searched)
+        print(qs)
+        return render(request, 'agenda/agenda_search_by_tags.html',
+                      {'searched': searched,
+                       'agenda': qs})
+    else:
+        return render(request, 'agenda/agenda_search_by_tags.html', {})
 
 
 def agenda_api_detail_view(request, pk, *args, **kwargs):

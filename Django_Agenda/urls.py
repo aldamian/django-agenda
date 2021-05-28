@@ -29,6 +29,7 @@ from agenda.views import (
     agenda_create_view,
     agenda_detail_view,
     agenda_list_view,
+    search_agenda_view,
     agenda_api_detail_view,
 )
 # pk - primary key
@@ -38,7 +39,8 @@ from django.views.generic import TemplateView
 urlpatterns = [
 
     # path('', include('django.contrib.auth.urls')),
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    # path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('', agenda_list_view, name='home'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
     path('register/', register_view, name='register'),
@@ -58,10 +60,11 @@ urlpatterns = [
     #      auth_views.PasswordResetConfirmView.as_view(template_name='account/password_reset_confirm.html'),
     #      name='password_reset_confirm'),
 
-    path('search/', search_view),
     path('agenda/', agenda_list_view, name='view agendas'),
     path('agenda/create/', agenda_create_view, name='create agenda'),
     path('agenda/<int:pk>/', agenda_detail_view),
+    path('search/', search_view),
+    path('search_agenda/', search_agenda_view, name='search by tags'),
     re_path(r'api/agenda/(?P<pk>\d+)/', agenda_api_detail_view),
     path('admin/', admin.site.urls),
 

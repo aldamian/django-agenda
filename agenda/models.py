@@ -17,6 +17,9 @@ class Agenda(models.Model):
     """
     CAN USE CUSTOM VALIDATORS DIRECTLY ON ANY OF THE MODEL FIELDS
     """
+    class Meta:
+        ordering = ["entry_date"]
+
     # Foreign Key correlates 2 tables together. Correlates Agenda to User
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 

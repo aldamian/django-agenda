@@ -49,7 +49,7 @@ class AgendaModelForm(forms.ModelForm):
             if entry_date < now.date() and notify_me:
                 raise forms.ValidationError("Can't notify for entries in the past.")
 
-            if entry_date == now.date() and notify_me_at > now.time() and actual_time_diff < min_time_diff:
+            if notify_me and entry_date == now.date() and notify_me_at > now.time() and actual_time_diff < min_time_diff:
                 raise forms.ValidationError("Can't notify sooner than 1 hour.")
 
         return self.cleaned_data

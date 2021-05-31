@@ -15,8 +15,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, re_path
 from django.conf.urls.static import static
-# from django.conf.urls import include
-# from django.conf.urls import url
+from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 
 from accounts.views import (
@@ -24,7 +23,6 @@ from accounts.views import (
     profile_view,
     logout_view,
     register_view,
-    # ActivateAccountView,
 )
 
 from agenda.views import (
@@ -37,22 +35,18 @@ from agenda.views import (
 )
 # pk - primary key
 
-from django.views.generic import TemplateView
-
 urlpatterns = [
 
     # path('', include('django.contrib.auth.urls')),
     # path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('', agenda_list_view, name='home'),
     path('home/', TemplateView.as_view(template_name='home.html'), name='anon_home'),
-    path('login/', login_view, name='login'),
-    path('profile/<username>/', profile_view, name='profile'),
-    path('logout/', logout_view, name='logout'),
     path('register/', register_view, name='register'),
     path('email_sent/', TemplateView.as_view(template_name='account/email_sent.html'), name='email sent'),
+    path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
+    path('profile/<username>/', profile_view, name='profile'),
 
-    # url(r'^activate_account/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-    #     ActivateAccountView.as_view(), name='activate_account'),
 
     # can't use this, changes the other views
     # path('account/', include('django.contrib.auth.urls')),
@@ -69,6 +63,7 @@ urlpatterns = [
          template_name='registration/password_reset_done.html'),
          name='password_reset_done'),
 
+    # User must be active and have usable password already
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(
          template_name='registration/password_reset_complete.html'),
@@ -78,7 +73,7 @@ urlpatterns = [
     path('agenda/', agenda_list_view, name='view agendas'),
     path('agenda/create/', agenda_create_view, name='create agenda'),
     path('agenda/<int:pk>/', agenda_detail_view),
-    path('search/', search_view),
+    # path('search/', search_view),
     path('search_agenda/', search_agenda_view, name='search by tags'),
     re_path(r'api/agenda/(?P<pk>\d+)/', agenda_api_detail_view),
     path('admin/', admin.site.urls),

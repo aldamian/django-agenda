@@ -3,13 +3,8 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from Django_Agenda.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
-from django.template.loader import render_to_string
+# from django.template.loader import render_to_string
 
-# reset password
-# from django.utils.encoding import force_text
-# from django.utils.http import urlsafe_base64_decode
-# from .tokens import account_activation_token
-# from django.views import View
 
 from .forms import LoginForm, RegisterForm
 from agenda.models import Agenda
@@ -47,7 +42,7 @@ def register_view(request):
             # login(request, user)
             subject = "Welcome to Django Agenda"
             message = 'Here is a link to set your password'
-            #message = render_to_string('account/email_content.html')
+            # message = render_to_string('account/email_content.html')
             recipient = email
             send_mail(subject, message, EMAIL_HOST_USER, [recipient], fail_silently=False)
             return redirect("/email_sent")
@@ -56,23 +51,6 @@ def register_view(request):
             return render(request, "forms.html", {"form": form})
 
     return render(request, "forms.html", {"form": form})
-
-
-# class ActivateAccountView(View):
-#     def get(self, request, uidb64, token):
-#         try:
-#             uid = force_text(urlsafe_base64_decode(uidb64))
-#             user = User.objects.get(pk=uid)
-#         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-#             user = None
-#
-#         if user is not None and account_activation_token.check_token(user, token):
-#             user.save()
-#             login(request, user)
-#             return redirect('profile')
-#         else:
-#             # invalid link
-#             return render(request, 'account/failure.html')
 
 
 def login_view(request):

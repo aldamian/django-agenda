@@ -26,18 +26,18 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # specific settings for gmail
-if DEBUG:
-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    EMAIL_HOST = "smtp.gmail.com"
-    """
-    EMAIL_HOST_USER = os.environ.get('EMAIL_NAME')
-    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
-    """
-    EMAIL_HOST_USER = "django.agenda@gmail.com"
-    EMAIL_HOST_PASSWORD = "%A3*@8pTbGaz2duCJL%dW5FQBfhemsT4"
-    EMAIL_PORT = 587
-    EMAIL_USE_TLS = True
-    EMAIL_USE_SSL = False
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+"""
+EMAIL_HOST_USER = os.environ.get('EMAIL_NAME')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+"""
+EMAIL_HOST_USER = "django.agenda@gmail.com"
+EMAIL_HOST_PASSWORD = "%A3*@8pTbGaz2duCJL%dW5FQBfhemsT4"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 # Application definition
 

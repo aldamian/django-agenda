@@ -22,7 +22,11 @@
 <body>
 
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark" >
-        <a href="{%url 'profile' request.user %}" class="navbar-brand">Django Agenda</a>
+        {%if user.is_authenticated%}
+            <a href="{%url 'profile' request.user %}" class="navbar-brand">Django Agenda</a>
+        {%else%}
+            <a href="{%url 'anon_home'%}" class="navbar-brand">Django Agenda</a>
+        {%endif%}
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -78,6 +82,10 @@
 
                     <li class="nav-item">
                         <a href="{%url 'register'%}" class="nav-link">Register</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{%url 'password_reset'%}" class="nav-link">Forgot Password?</a>
                     </li>
 
                 {%endif%}

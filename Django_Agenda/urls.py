@@ -15,14 +15,16 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, re_path
 from django.conf.urls.static import static
+# from django.conf.urls import include
 # from django.conf.urls import url
-from django.contrib.auth import views
+from django.contrib.auth import views as auth_views
 
 from accounts.views import (
     login_view,
     profile_view,
     logout_view,
     register_view,
+    # ActivateAccountView,
 )
 
 from agenda.views import (
@@ -43,24 +45,34 @@ urlpatterns = [
     # path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('', agenda_list_view, name='home'),
     path('login/', login_view, name='login'),
-    path('profile/<username>/', profile_view, name="profile"),
+    path('profile/<username>/', profile_view, name='profile'),
     path('logout/', logout_view, name='logout'),
     path('register/', register_view, name='register'),
-    path('email_sent/', TemplateView.as_view(template_name='account/email_sent.html')),
-
-    path('password-reset/',
-         views.PasswordResetView.as_view(template_name='account/password_reset_form.html'),
-         name='password_reset'),
-    path('password-reset-done',
-         views.PasswordResetDoneView.as_view(template_name='account/password_reset_done.html'),
-         name='password_reset_done'),
+    path('email_sent/', TemplateView.as_view(template_name='account/email_sent.html'), name='email sent'),
 
     # url(r'^activate_account/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-    #     views.ActivateAccountView.as_view(), name='activate_account'),
+    #     ActivateAccountView.as_view(), name='activate_account'),
 
-    # path('password-reset-confirm/<uidb64>/<token>/',
-    #      auth_views.PasswordResetConfirmView.as_view(template_name='account/password_reset_confirm.html'),
-    #      name='password_reset_confirm'),
+    # can't use this, changes the other views
+    # path('account/', include('django.contrib.auth.urls')),
+
+
+    path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(
+         template_name='registration/password_change_done.html'),
+         name='password_change_done'),
+
+    path('password_change/', auth_views.PasswordChangeView.as_view(
+         template_name='registration/password_change.html'),
+         name='password_change'),
+    path('password_reset/done/', auth_views.PasswordResetCompleteView.as_view(
+         template_name='registration/password_reset_done.html'),
+         name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(
+         template_name='registration/password_reset_complete.html'),
+         name='password_reset_complete'),
+
 
     path('agenda/', agenda_list_view, name='view agendas'),
     path('agenda/create/', agenda_create_view, name='create agenda'),

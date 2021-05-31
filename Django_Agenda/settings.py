@@ -38,6 +38,7 @@ EMAIL_HOST_PASSWORD = "%A3*@8pTbGaz2duCJL%dW5FQBfhemsT4"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = "DjangoAgenda Team <noreply@djangoagenda.com>"
 
 # Application definition
 

@@ -26,7 +26,7 @@ from accounts.views import (
 )
 
 from agenda.views import (
-    search_view,
+    # search_view,
     agenda_create_view,
     agenda_detail_view,
     agenda_list_view,
@@ -62,6 +62,8 @@ urlpatterns = [
     path('password_reset/done/', auth_views.PasswordResetCompleteView.as_view(
          template_name='registration/password_reset_done.html'),
          name='password_reset_done'),
+
+    path('set_password/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='set_password'),
 
     # User must be active and have usable password already
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),

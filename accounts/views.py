@@ -3,7 +3,8 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from Django_Agenda.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
-# from django.template.loader import render_to_string
+from django.utils.crypto import get_random_string
+from django.template.loader import render_to_string
 
 
 from .forms import LoginForm, RegisterForm
@@ -13,8 +14,6 @@ User = get_user_model()
 
 
 def register_view(request):
-    # import ipdb
-    # ipdb.set_trace()
 
     if request.user.is_authenticated:
         return redirect('/')
@@ -31,6 +30,8 @@ def register_view(request):
             user = User.objects.create_user(username, email)
             user.first_name = first_name
             user.last_name = surname
+            # set temporary password
+            user.password = get_random_string()
             user.save()
 
         except Exception:  # this exception is too broad
@@ -42,7 +43,7 @@ def register_view(request):
             # login(request, user)
             subject = "Welcome to Django Agenda"
             message = 'Here is a link to set your password'
-            # message = render_to_string('account/email_content.html')
+            # message = render_to_string('registration/set_password_email.html')
             recipient = email
             send_mail(subject, message, EMAIL_HOST_USER, [recipient], fail_silently=False)
             return redirect("/email_sent")

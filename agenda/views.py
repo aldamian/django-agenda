@@ -71,7 +71,10 @@ def agenda_list_view(request, *args, **kwargs):
 def search_agenda_view(request):
     if request.method == "POST":
         searched = request.POST.get('searched')
-        qs = Agenda.objects.filter(Q(user=request.user) | Q(public=1)).filter(tags__icontains=searched).order_by('-last_modified', 'entry_date')
+        qs = Agenda.objects.filter(Q(user=request.user) | Q(public=1))\
+                           .filter(tags__icontains=searched)\
+                           .order_by('-last_modified', 'entry_date')
+
         return render(request, 'agenda/agenda_search_by_tags.html',
                       {'searched': searched,
                        'agenda': qs})

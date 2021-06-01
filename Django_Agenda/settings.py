@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_crontab',
+
     'accounts',
     'agenda',
 ]
@@ -133,6 +135,13 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+
+# cron jobs - runs every 1 minute
+
+CRONJOBS = [
+    ('*/1 * * * *', 'agenda.cron.agenda_scheduled_notifications')
+]
 
 
 # Static files (CSS, JavaScript, Images)

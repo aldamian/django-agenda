@@ -43,7 +43,7 @@ def register_view(request):
             # login(request, user)
             # subject = "Welcome to Django Agenda"
             # message = 'Here is a link to set your password'
-            # # message = render_to_string('registration/set_password_email.html')
+            # message = render_to_string('registration/set_password_email.html')
             # recipient = email
             # send_mail(subject, message, EMAIL_HOST_USER, [recipient], fail_silently=False)
             return redirect("/password_reset")

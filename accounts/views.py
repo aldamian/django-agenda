@@ -41,12 +41,12 @@ def register_view(request):
         """
         if user is not None:
             # login(request, user)
-            subject = "Welcome to Django Agenda"
-            message = 'Here is a link to set your password'
-            # message = render_to_string('registration/set_password_email.html')
-            recipient = email
-            send_mail(subject, message, EMAIL_HOST_USER, [recipient], fail_silently=False)
-            return redirect("/email_sent")
+            # subject = "Welcome to Django Agenda"
+            # message = 'Here is a link to set your password'
+            # # message = render_to_string('registration/set_password_email.html')
+            # recipient = email
+            # send_mail(subject, message, EMAIL_HOST_USER, [recipient], fail_silently=False)
+            return redirect("/password_reset")
         else:
             request.session['register_error'] = 1  # 1 == True
             return render(request, "forms.html", {"form": form})

@@ -63,7 +63,7 @@ urlpatterns = [
          template_name='registration/password_reset_done.html'),
          name='password_reset_done'),
 
-    path('set_password/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='set_password'),
+    # path('set_password/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='set_password'),
 
     # User must be active and have usable password already
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),

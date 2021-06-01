@@ -1,13 +1,13 @@
 from django.core.paginator import Paginator
 from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from Django_Agenda.settings import EMAIL_HOST_USER
-from django.core.mail import send_mail
+# from Django_Agenda.settings import EMAIL_HOST_USER
+# from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
 from django.template.loader import render_to_string
 
-
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, EditProfileForm
 from agenda.models import Agenda
 
 User = get_user_model()
@@ -91,7 +91,32 @@ def profile_view(request, username):
     page = request.GET.get('page')
     agendas = paginator.get_page(page)
 
-    return render(request, 'account/profile.html', {'agendas': agendas})
+    return render(request, 'account/profile.html', {'agendas': agendas, 'user': user})
+
+
+@login_required
+def profile_edit_view(request, username):
+    # user = User.objects.get(username=username)
+    # form = EditProfileForm(request.POST or None)
+    #
+    # if form.is_valid():
+    #     first_name = form.cleaned_data.get("first_name")
+    #     surname = form.cleaned_data.get("surname")
+    #     # username = form.cleaned_data.get("username")
+    #     # email = form.cleaned_data.get("email")
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            # need configuration for this
+            # messages.success(request, 'Your Profile has been updated!')
+            return redirect('/')
+
+    else:
+        form = EditProfileForm(instance=request.user)
+
+    context = {'form': form}
+    return render(request, 'forms.html', context)
 
 
 def logout_view(request):

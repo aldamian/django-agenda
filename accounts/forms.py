@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.core.validators import RegexValidator
+# from django.contrib.auth.forms import UserCreationForm
 # from django.contrib.auth.forms import AuthenticationForm
 
 alphabetical          = RegexValidator(r'^[a-zA-Z-]*$', 'Please enter only alphabetical letters.')
@@ -32,21 +32,10 @@ User = get_user_model()
 
 class RegisterForm(forms.Form):
 
-    first_name  = forms.CharField(max_length=50, validators=[alphabetical])
-    surname     = forms.CharField(max_length=50, validators=[alphabetical])
-    username    = forms.CharField(max_length=50, validators=[alphanumeric_and_line])
-    email       = forms.EmailField(max_length=255)
-
-    # password1 = forms.CharField(
-    #     label='Password',
-    #     widget=forms.PasswordInput(
-    #         # add form control with bootstrap
-    #         attrs={
-    #             "class": "form-control",
-    #             "id": "user-password",
-    #         }
-    #     )
-    # )
+    first_name = forms.CharField(max_length=50, validators=[alphabetical])
+    surname = forms.CharField(max_length=50, validators=[alphabetical])
+    username = forms.CharField(max_length=50, validators=[alphanumeric_and_line])
+    email = forms.EmailField(max_length=255)
 
     def clean_username(self):
         username = self.cleaned_data.get("username")
@@ -109,3 +98,20 @@ class LoginForm(forms.Form):
         password = self.cleaned_data.get("password")
 
         return password
+
+
+class EditProfileForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(EditProfileForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['readonly'] = True
+        self.fields['email'].widget.attrs['readonly'] = True
+
+    class Meta:
+        model = User
+        fields = [
+            'first_name',
+            'last_name',
+            'username',
+            'email',
+        ]

@@ -3,7 +3,10 @@
 {% block content %}
 
     {% if  user.is_authenticated %}
-        <h2>{% block title %} User Profile{% endblock %}</h2>
+        <h1>{% block title %} Profile of "{{ user.username }}" {% endblock %}</h1>
+        <h3>Name: {{ user.last_name}}</h3>
+        <h3>Surname: {{ user.first_name }}</h3>
+        <br>
         {% for object in agendas %}
             <a href="/agenda/{{ object.id }}"><h3 style="color: dodgerblue">"{{ object.title }}"</h3></a>
             <br>

@@ -107,6 +107,8 @@ class EditProfileForm(forms.ModelForm):
         self.fields['username'].widget.attrs['readonly'] = True
         self.fields['email'].widget.attrs['readonly'] = True
 
+    # How can I add my regex validators here?
+
     class Meta:
         model = User
         fields = [

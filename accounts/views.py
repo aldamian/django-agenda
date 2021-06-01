@@ -96,21 +96,13 @@ def profile_view(request, username):
 
 @login_required
 def profile_edit_view(request, username):
-    # user = User.objects.get(username=username)
-    # form = EditProfileForm(request.POST or None)
-    #
-    # if form.is_valid():
-    #     first_name = form.cleaned_data.get("first_name")
-    #     surname = form.cleaned_data.get("surname")
-    #     # username = form.cleaned_data.get("username")
-    #     # email = form.cleaned_data.get("email")
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
             # need configuration for this
             # messages.success(request, 'Your Profile has been updated!')
-            return redirect('/')
+            return redirect('profile', username)
 
     else:
         form = EditProfileForm(instance=request.user)

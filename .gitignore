@@ -23,6 +23,7 @@ dist/
 # Maven
 target/
 dist/
+python3_8/
 
 # JetBrains IDE
 .idea/

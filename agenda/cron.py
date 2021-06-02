@@ -9,8 +9,8 @@ from .models import Agenda
 
 
 def agenda_scheduled_notifications():
-    # import ipdb
-    # ipdb.set_trace()
+    import ipdb
+    ipdb.set_trace()
     qs = Agenda.objects.filter(notify_me=True).filter(entry_date=timezone.now().date())
     now = timezone.now().time()
     allowed_error = now.replace(hour=0, minute=2, second=0, microsecond=0)

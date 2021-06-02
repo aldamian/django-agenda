@@ -7,7 +7,7 @@ MySQL 5.7.34
 
 This is a Python/Django app which provides the functionalities of an Agenda. 
 
-This application was developed during the 10 May- 2 June 2021 individual ASSIST internship. 
+This application was developed during the 10 May - 2 June 2021 individual ASSIST internship. 
 
 ## How to install the application
 
@@ -15,17 +15,17 @@ This application was developed during the 10 May- 2 June 2021 individual ASSIST 
     Create an environment using virtualenv and activate it.
     Install the project dependencies with pip. Run this command: pip install -r requirements.txt while being in the folder with the requirements.txt file.
     Install MySQL 5.7.34
-	Access mysql server using: mysql -u root -p and create the database: CREATE DATABASE db_name;
+	Access mysql server using: mysql -u root -p and create the database: CREATE DATABASE db_name; replace db_name with agenda
     Create a local_settings.py file in the same folder as settings.py. Change the name and user if needed and add the password.
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'agenda',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        # added timezone
-        'TIME_ZONE': 'Europe/Bucharest',
+DATABASES = {<br />
+    'default': {<br />
+        'ENGINE': 'django.db.backends.mysql',<br />
+        'NAME': 'agenda',<br />
+        'USER': 'root',<br />
+        'PASSWORD': 'root',<br />
+        # added timezone<br />
+        'TIME_ZONE': 'Europe/Bucharest',<br />
     }
 }
 

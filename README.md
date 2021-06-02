@@ -3,11 +3,13 @@
 Ubuntu 20.04.2 LTS <br />
 MySQL 5.7.34
 
+## Description
+
 This is a Python/Django app which provides the functionalities of an Agenda. 
 
 This application was developed during the 10 May- 2 June 2021 individual ASSIST internship. 
 
-How to install the application
+## How to install the application
 
     Clone the code from git.
     Create an environment using virtualenv and activate it.

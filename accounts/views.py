@@ -90,8 +90,32 @@ def profile_view(request, username):
     paginator = Paginator(qs, 5)
     page = request.GET.get('page')
     agendas = paginator.get_page(page)
+    context = {'agendas': agendas,
+               'user': user}
 
-    return render(request, 'account/profile.html', {'agendas': agendas, 'user': user})
+    return render(request, 'account/profile.html', context)
+
+
+@login_required
+def accounts_list_view(request):
+    user = request.user
+    qs = User.objects.exclude(username=user.username).order_by('username')
+    to_be_deleted = []
+
+    for user_temp in qs:
+        # qs_temp = Agenda.objects.filter(user=user_temp).values('public')
+        qs_temp = Agenda.objects.filter(user=user_temp).filter(public=True)
+        if not qs_temp:
+            to_be_deleted.append(user_temp)
+
+    qs.filter(username__in=to_be_deleted).delete()
+
+    paginator = Paginator(qs, 10)
+    page = request.GET.get('page')
+    users = paginator.get_page(page)
+    context = {"users": users}
+
+    return render(request, "account/accounts_list.html", context)
 
 
 @login_required

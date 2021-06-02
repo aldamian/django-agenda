@@ -6,11 +6,12 @@ from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 
 from accounts.views import (
+    register_view,
     login_view,
+    logout_view,
     profile_view,
     profile_edit_view,
-    logout_view,
-    register_view,
+    accounts_list_view,
 )
 
 from agenda.views import (
@@ -64,6 +65,9 @@ urlpatterns = [
     path('agenda/', agenda_list_view, name='view agendas'),
     path('agenda/create/', agenda_create_view, name='create agenda'),
     path('agenda/<int:pk>/', agenda_detail_view),
+
+    path('users/', accounts_list_view, name='view users'),
+
     # path('search/', search_view),
     path('search_agenda/', search_agenda_view, name='search by tags'),
     re_path(r'api/agenda/(?P<pk>\d+)/', agenda_api_detail_view),

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>{% block title %} Users {% endblock %} with at lest 1 public entry</h1>
+    <br>
+    {% for object in users %}
+        <h3>{{ object.username }} -<a href="/profile/{{ object.username }}"> View Profile</a></h3>
+        <br>
+    {% endfor %}
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if users.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ contacts.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ users.number }} of {{ users.paginator.num_pages }}
+            </span>
+
+            {% if agendas.has_next %}
+                <a href="?page={{ users.next_page_number }}">next</a>
+                <a href="?page={{ users.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+    
+{% endblock %}

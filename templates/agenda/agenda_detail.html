@@ -15,6 +15,6 @@
         {% include "agenda/agenda_detail_snippet.html" with agenda=object %}
     {% endif %}
 
-    <button class="w3-button w3-black" name="pdf" type="submit">Generate PDF</button>
+    <a href="{%url 'create pdf' object.id%}"><button class="w3-button w3-black" name="pdf" type="submit">Generate PDF</button></a>
 
 {% endblock content %}

@@ -21,6 +21,8 @@ from agenda.views import (
     agenda_list_view,
     search_agenda_view,
     agenda_api_detail_view,
+
+    agenda_render_pdf_view,
 )
 # pk - primary key
 
@@ -65,6 +67,8 @@ urlpatterns = [
     path('agenda/', agenda_list_view, name='view agendas'),
     path('agenda/create/', agenda_create_view, name='create agenda'),
     path('agenda/<int:pk>/', agenda_detail_view),
+
+    path('agenda/<int:pk>/pdf/', agenda_render_pdf_view, name='create pdf'),
 
     path('users/', accounts_list_view, name='view users'),
 

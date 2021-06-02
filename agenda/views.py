@@ -1,10 +1,15 @@
 from django.contrib.auth.decorators import login_required
 # from django.contrib.admin.views.decorators import staff_member_required
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, Http404, HttpResponseNotFound
-from django.shortcuts import render, redirect
+from django.http import JsonResponse, Http404, HttpResponseNotFound
+# from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render  # , redirect
 from django.db.models import Q
 
 # PDF file
+
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 # from io import BytesIO
 # from datetime import date
@@ -57,21 +62,39 @@ def agenda_detail_view(request, pk):
         raise Http404
     # return HttpResponse(f"Product id {obj.id}")
 
-    # if 'pdf' in request.POST:
-    #     response = HttpResponse(content_type='application/pdf')
-    #     today = date.today()
-    #     filename = 'pdf_demo' + today.strftime('%Y-%m-%d')
-    #     response['Content-Disposition'] = 'attachement; filename={0}.pdf'.format(filename)
-    #     buffer = BytesIO()
-    #     report = PDFPrint(buffer, 'A4')
-    #     pdf = report.report(weather_period, 'Weather statistics data')
-    #     response.write(pdf)
-    #     return response
-
     if request.user == obj.user or obj.public == 1:
         return render(request, "agenda/agenda_detail.html", {"object": obj})
     else:
         return HttpResponseNotFound("Page not found.")
+
+
+@login_required
+def agenda_render_pdf_view(request, pk):
+    try:
+        agenda = Agenda.objects.get(pk=pk)
+    except Agenda.DoesNotExist:
+        raise Http404
+
+    template_path = 'pdf/agenda_entry_pdf.html'
+    context = {'agenda': agenda}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    filename = agenda.title + '.pdf'
+    # if download
+    # response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+    # if display
+    response['Content-Disposition'] = 'filename="{}"'.format(filename)
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
 
 
 def agenda_list_view(request, *args, **kwargs):

@@ -1,3 +1,4 @@
+arabic-reshaper==2.1.3
 backcall==0.2.0
 certifi==2020.12.5
 cffi==1.14.5
@@ -8,6 +9,8 @@ defusedxml==0.7.1
 Django==2.2
 django-allauth==0.44.0
 django-crontab==0.7.1
+future==0.18.2
+html5lib==1.1
 idna==2.10
 ipdb==0.13.7
 ipython==7.23.1
@@ -26,13 +29,18 @@ ptyprocess==0.7.0
 pycparser==2.20
 Pygments==2.9.0
 PyJWT==2.1.0
+PyPDF2==1.26.0
+python-bidi==0.4.2
 python3-openid==3.2.0
 pytz==2021.1
 reportlab==3.5.67
 requests==2.25.1
 requests-oauthlib==1.3.0
+six==1.16.0
 sqlparse==0.4.1
 toml==0.10.2
 traitlets==5.0.5
 urllib3==1.26.4
 wcwidth==0.2.5
+webencodings==0.5.1
+xhtml2pdf==0.2.5

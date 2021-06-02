@@ -4,6 +4,11 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, Http40
 from django.shortcuts import render, redirect
 from django.db.models import Q
 
+# PDF file
+
+# from io import BytesIO
+# from datetime import date
+
 # Relative import
 from .forms import AgendaModelForm
 from .models import Agenda
@@ -51,6 +56,18 @@ def agenda_detail_view(request, pk):
     except Agenda.DoesNotExist:
         raise Http404
     # return HttpResponse(f"Product id {obj.id}")
+
+    # if 'pdf' in request.POST:
+    #     response = HttpResponse(content_type='application/pdf')
+    #     today = date.today()
+    #     filename = 'pdf_demo' + today.strftime('%Y-%m-%d')
+    #     response['Content-Disposition'] = 'attachement; filename={0}.pdf'.format(filename)
+    #     buffer = BytesIO()
+    #     report = PDFPrint(buffer, 'A4')
+    #     pdf = report.report(weather_period, 'Weather statistics data')
+    #     response.write(pdf)
+    #     return response
+
     if request.user == obj.user or obj.public == 1:
         return render(request, "agenda/agenda_detail.html", {"object": obj})
     else:

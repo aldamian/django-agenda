@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+      <title>{% block title %}Calendar{% endblock %}</title>
+      <link href='{% static 'css/fullcalendar.main.min.css' %}' rel='stylesheet' />
+      <script src="{% static 'js/fullcalendar.main.min.js' %}"></script>
+
+      <script>
+        function draw({{object_list}}) {
+            document.addEventListener('DOMContentLoaded', function() {
+                var calendarEl = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    initialDate: '2021-06-07',
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    },
+                    events: {{object_list}}
+                });
+                calendar.render();
+            })}
+
+        function render_agendas(){
+            {{ object_list }}.forEach(agenda_obj => {
+                render
+            })
+        }
+
+
+    </script>
+
+  </head>
+  <body onload="draw({{ object_list }});">
+    <div id='calendar'></div>
+  </body>
+</html>

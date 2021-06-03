@@ -20,6 +20,7 @@ from agenda.views import (
     agenda_detail_view,
     agenda_list_view,
     search_agenda_view,
+    agenda_calendar_view,
     agenda_api_detail_view,
 
     agenda_render_pdf_view,
@@ -38,6 +39,7 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('profile/<username>/', profile_view, name='profile'),
     path('profile/<username>/edit_profile/', profile_edit_view, name='profile_edit'),
+    path('calendar/', agenda_calendar_view, name='calendar view'),
 
 
     # can't use this, changes the other views

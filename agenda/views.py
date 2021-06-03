@@ -108,6 +108,17 @@ def agenda_list_view(request, *args, **kwargs):
 
 
 @login_required
+def agenda_calendar_view(request):
+    user = request.user
+
+    qs_public = Agenda.objects.filter(user=user).filter(public=1)
+    qs_private = Agenda.objects.filter(user=user).filter(public=0)
+
+    context = {"object_list": qs_public}
+    return render(request, 'agenda/agenda_calendar_view.html', context)
+
+
+@login_required
 def search_agenda_view(request):
     if request.method == "POST":
         searched = request.POST.get('searched')

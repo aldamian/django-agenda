@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <style>
+    h1 {text-align: center;}
+    p {text-align: center;}
+    div {text-align: center;}
+    </style>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Email sent</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+</head>
+
+<body>
+    <br>
+    <h1>An email was sent to your address.</h1>
+    <p>Please follow the provided link to set your password.</p>
+    <p><a href="/">Return to home page.</a></p>
+
+</body>
+
+</html>

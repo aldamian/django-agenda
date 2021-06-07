@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+      <title>{% block title %}Calendar{% endblock %}</title>
+      <link href='{% static 'css/fullcalendar.main.min.css' %}' rel='stylesheet' />
+      <script src="{% static 'js/fullcalendar.main.min.js' %}"></script>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let calendarEl = document.getElementById('calendar');
+
+            let calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                aspectRatio:  2,
+                headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+              },
+
+              events: [
+                  {% for agenda in agenda_list%}
+                    {
+                        title: '{{agenda.title}}',
+                        start: '{{ agenda.entry_date }}',
+                        end: '{{ agenda.entry_date }}',
+                        rendering: 'background',
+                        {% if agenda.public == True %}
+                            color: '#378006',
+                        {% else %}
+                            color: '#6495ED',
+                        {% endif %}
+                    },
+                  {% endfor %}
+              ],
+            eventRender: function(event, element) {
+            element.css("font-size", "1.2em");
+            element.css("padding", "5px");
+}
+            });
+
+            calendar.render();
+        });
+    </script>
+
+  </head>
+    <div id='calendar'></div>
+</html>

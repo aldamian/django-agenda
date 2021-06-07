@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <style>
+    h1 {text-align: center;}
+    p {text-align: center;}
+    div {text-align: center;}
+    </style>
+
+    {% if searched %}
+        <h1>You searched for agendas with tag(s)</h1>
+        <h1  style="color: black;">{{ searched }}</h1>
+        <br/>
+        {% for object in agenda %}
+            <div>
+                <a href="/agenda/{{ object.id }}"><h3 style="color: dodgerblue">"{{ object.title }}"</h3></a>
+                Created by: <a href="{%url 'profile' object.user %}"> {{ object.user }} </a>
+                <br/>
+                {% include 'agenda/agenda_detail_snippet.html' with product=object %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <h1>You forgot to provide tags for search.</h1>
+    {% endif %}
+
+{% endblock %}

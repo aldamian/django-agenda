@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- actions = "/send/to/this/url/
+    . - send to the url that's rendering the form -->
+    <form method="POST" action = ".">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+{#        I lose validators if I do this#}
+{#        <p>Title: {{ form.title }}</p>#}
+{#        <p>Entry date: {{ form.entry_date }}</p>#}
+{#        <p>Tags: {{ form.tags }}</p>#}
+{#        <p>Public: {{ form.public }}</p>#}
+{#        <p>Notify me: {{ form.notify_me }} </p>#}
+{#        <p style="visibility: hidden" id="notify">Notify me at: {{ form.notify_me_at }}</p>#}
+{#        <p>Content: {{ form.content }}</p>#}
+
+        <body onload="go_hide();"></body>
+        <button type="submit" id="btn_submit"> Submit </button>
+
+        <script>
+
+            let labels = document.getElementsByTagName('LABEL');
+            for (let i = 0; i < labels.length; i++) {
+                if (labels[i].htmlFor !== '') {
+                     let elem = document.getElementById(labels[i].htmlFor);
+                     if (elem)
+                        elem.label = labels[i];
+                }
+            }
+
+            {#window.onload = function (){#}
+            {#    toggle();#}
+
+            function go_hide(){
+                let visible = document.getElementById("id_notify_me_at");
+                let check = document.getElementById("id_notify_me")
+                visible.style.visibility = "hidden";
+                check.checked = false;
+                visible.label.innerHTML = '';
+            }
+
+            function toggle() {
+                let visible = document.getElementById("id_notify_me_at");
+              if (visible.style.visibility === "visible") {
+                  visible.style.visibility = "hidden";
+                  visible.label.innerHTML = '';
+              } else {
+                  visible.label.innerHTML = 'Notify me at: ';
+                  visible.style.visibility = "visible";
+              }
+            }
+            document.getElementById('id_notify_me').addEventListener('click', toggle);
+
+        </script>
+
+    </form>
+{% endblock %}

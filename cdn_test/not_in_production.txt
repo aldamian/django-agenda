@@ -1,0 +1,2 @@
+Definitely don't use this in production.
+cdn = content delivery network

@@ -1,0 +1,20 @@
+<!-- Don't add too much logic here.
+    Make the view do it.-->
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{{ object.title }} - {{ object.entry_date }}</h1>
+    <h3>Created by: <a href="{%url 'profile' object.user %}">{{ object.user }} </a></h3>
+
+    {% if request.path == "/" %}
+        <h3>Welcome to home page</h3>
+        <!-- Replace title with content. Need markdown for content.
+    As of now, if there is a tag, display it. -->
+    {% else %}
+        {% include "agenda/agenda_detail_snippet.html" with agenda=object %}
+    {% endif %}
+
+    <a href="{%url 'create pdf' object.id%}"><button class="w3-button w3-black" name="pdf" type="submit">Generate PDF</button></a>
+
+{% endblock content %}

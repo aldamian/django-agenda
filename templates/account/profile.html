@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if  user.is_authenticated %}
+        <h1>{% block title %} Profile of "{{ user.username }}" {% endblock %}</h1>
+        <h3>First name: {{ user.first_name }}</h3>
+        <h3>Surname: {{ user.last_name}}</h3>
+        <br>
+        {% for object in agendas %}
+            <a href="/agenda/{{ object.id }}"><h3 style="color: dodgerblue">"{{ object.title }}"</h3></a>
+            <br>
+            {% include 'agenda/agenda_detail_snippet.html' with agenda=object%}
+        {% endfor %}
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if agendas.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ contacts.previous_page_number }}">previous</a>
+                {% endif %}
+
+                 <span class="current">
+                     Page {{ agendas.number }} of {{ agendas.paginator.num_pages }}
+                 </span>
+
+                {% if agendas.has_next %}
+                    <a href="?page={{ agendas.next_page_number }}">next</a>
+                    <a href="?page={{ agendas.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+    
+{% endblock %}

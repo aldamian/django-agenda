@@ -13,7 +13,10 @@ dist/
 # Compiled Python bytecode
 *.py[cod]
 *.pyc
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
 # Log files
 *.log
 

@@ -91,7 +91,7 @@ def agenda_render_pdf_view(request, pk):
     # create a pdf
     pisa_status = pisa.CreatePDF(
        html, dest=response)
-    # if error then show some funy view
+    # if error then show some funny view
     if pisa_status.err:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
@@ -109,12 +109,12 @@ def agenda_list_view(request, *args, **kwargs):
 
 @login_required
 def agenda_calendar_view(request):
-    user = request.user
+    qs = Agenda.objects.filter(user=request.user)
 
-    qs_public = Agenda.objects.filter(user=user).filter(public=1)
-    qs_private = Agenda.objects.filter(user=user).filter(public=0)
-
-    context = {"object_list": qs_public}
+    context = {"agenda_list": qs}
+    for agenda in qs:
+        agenda.entry_date = str(agenda.entry_date)
+    # how do I make an event occupy the entire cell?
     return render(request, 'agenda/agenda_calendar_view.html', context)
 
 

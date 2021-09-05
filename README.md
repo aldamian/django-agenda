@@ -13,6 +13,7 @@ I created this application during the 10 May - 10 June 2021 individual ASSIST in
 
     Clone the code from git.
     Create an environment using virtualenv and activate it.
+    sudo apt-get install libmysqlclient-dev
     Install the project dependencies with pip. Run this command: pip install -r requirements.txt while being in the folder with the requirements.txt file.
     Install MySQL 5.7.34
 	Access mysql server using: mysql -u root -p and create the database: CREATE DATABASE db_name; replace db_name with agenda

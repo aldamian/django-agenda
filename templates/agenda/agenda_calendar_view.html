@@ -12,26 +12,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             let calendarEl = document.getElementById('calendar');
 
-            let calendar = new FullCalendar.Calendar(calendarEl,{
-                customButtons: {
-                    public: {
-                        theme: 'true',
-                        text: 'public',
-                        color: '#378006',
-                    },
-                    private: {
-                        theme: 'true',
-                        text: 'private',
-                        color: '#6495ED',
-                    },
-            },
-
-                    initialView: 'dayGridMonth',
-                    aspectRatio:  2,
-                    headerToolbar: {
-                    left: 'prev,next today public private',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            let calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                aspectRatio:  2,
+                headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
               },
 
               events: [
@@ -49,11 +36,10 @@
                     },
                   {% endfor %}
               ],
-            eventAfterAllRender: function(view) {
-                if ($('.label').length == 0) {
-                    $('.fc-customButtons-public').before('<div class="label">test</div>');
-                }
-            }
+            eventRender: function(event, element) {
+            element.css("font-size", "1.2em");
+            element.css("padding", "5px");
+}
             });
 
             calendar.render();

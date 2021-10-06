@@ -125,7 +125,12 @@ def search_agenda_view(request):
         qs = Agenda.objects.filter(Q(user=request.user) | Q(public=1))\
                            .filter(tags__icontains=searched)\
                            .order_by('-last_modified', 'entry_date')
-
+        """
+        SEARCH BY TAGS SHOULD APPEAR IN THE SAME PAGE. Dynamically update the page? How?
+            - ajax
+            
+        refresh page but different results based on search
+        """
         return render(request, 'agenda/agenda_search_by_tags.html',
                       {'searched': searched,
                        'agenda': qs})

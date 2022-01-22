@@ -6,8 +6,7 @@ MySQL 5.7.34
 ## Description
 
 This is a Python/Django app which provides the functionalities of an Agenda. 
-
-I created this application during the 10 May - 10 June 2021 individual ASSIST internship. 
+This was created during the 10 May - 10 June 2021 individual ASSIST internship. 
 
 ## How to install the application
 

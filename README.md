@@ -1,3 +1,23 @@
+# Agenda Web App
+
+
+
+During my initial internship, I developed a dynamic Agenda Web Application on Linux with Django, offering a seamless user experience for both anonymous and registered users with tailored permissions. 
+
+The app boasts an array of features such as creating public or private agendas, searching through both personal and public agendas, receiving email notifications for specific entries, and visualizing all agenda entries through a conveniently integrated JavaScript calendar.
+
+Technology stack: 
+
+• Linux 
+• JavaScript
+• MySQL database
+• Bootstrap, CSS and HTML
+• cron-job for scheduling email notifications
+
+During my initial internship, I developed a dynamic Agenda Web Application on Linux with Django, offering a seamless user experience for both anonymous and registered users with tailored permissions. The app boasts an array of features such as creating public or private agendas, searching through both personal and public agendas, receiving email notifications for specific entries, and visualizing all agenda entries through a conveniently integrated JavaScript calendar. Technology stack: • Linux • JavaScript • MySQL database • Bootstrap, CSS and HTML • cron-job for scheduling email notifications
+
+    Skills: Python · Django · Git
+
 ## Project Setup
 
 Ubuntu 20.04.2 LTS <br />
